@@ -4,7 +4,7 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // will share any static html files with the browser
 app.use( express.static('html') )
