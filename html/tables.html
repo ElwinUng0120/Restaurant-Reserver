@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hot Restaurant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <style>
+    .jumbotron h1 {
+      font-size: 400%;
+    }
+    .list {
+      font-size: 150%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron text-center font-weight-bold">
+      <h1 class="border-bottom p-2"><i class="fas fa-fire-alt"></i> Hot Restaurant</h1>
+      <h3 class="p-2">Current Reservations and Waiting List</h3>
+      <a href="./index.html" class="btn btn-info btn-lg"><i class="fas fa-home"></i></a>
+      <a href="./reserve.html" class="btn btn-danger btn-lg"><i class="far fa-credit-card"></i> Make Reservation</a>
+    </div>
+  
+    <section class="container border p-0 mb-2">
+      <div class="bg-light border pl-2">Current Reservations</div>
+      <div id="tableList">
+        <!-- <div class="list border m-2 bg-light" id="resv1div">
+          <div class="p-2">
+            <span class="badge badge-info">1</span> <span id="resv1">Resv1</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="resv2div">
+          <div class="p-2">
+            <span class="badge badge-info">2</span> <span id="resv2">Resv2</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="resv3div">
+          <div class="p-2">
+            <span class="badge badge-info">3</span> <span id="resv3">Resv3</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="resv4div">
+          <div class="p-2">
+            <span class="badge badge-info">4</span> <span id="resv4">Resv4</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="resv5div">
+          <div class="p-2">
+            <span class="badge badge-info">5</span> <span id="resv5">Resv5</span>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="container border p-0 mb-2">
+      <div class="bg-light border pl-2">Wait List</div>
+      <div id="waitList">
+        <!-- <div class="list border m-2 bg-light" id="wait1div">
+          <div class="p-2">
+            <span class="badge badge-info">1</span> <span id="wait1">Wait1</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="wait2div">
+          <div class="p-2">
+            <span class="badge badge-info">2</span> <span id="wait2">Wait2</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="wait3div">
+          <div class="p-2">
+            <span class="badge badge-info">3</span> <span id="wait3">Wait3</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="wait4div">
+          <div class="p-2">
+            <span class="badge badge-info">4</span> <span id="wait4">Wait4</span>
+          </div>
+        </div>
+        <div class="list border m-2 bg-light" id="wait5div">
+          <div class="p-2">
+            <span class="badge badge-info">5</span> <span id="wait5">Wait5</span>
+          </div>
+        </div> -->
+      </div>
+    </section>
+	  <!-- this is sample code ... you will be changing this! -->
+    <!-- <div class="row">
+		<div class="col">
+			<button onClick="tableList(event)">Get Table List</button>
+			<div id='tableList'></div>
+		</div> -->
+  </div>
+
+  <script type="text/javascript">
+    async function tableList( event ){
+      console.log("[tableList] running");
+      //event.preventDefault();
+      $("#tableList").empty();
+      $("#waitList").empty();
+      const url = '/api/tables';
+      var tableData = await fetch(url).then(res => res.json());
+      console.log(`[tableList] tableData=${JSON.stringify(tableData)}`);
+      for(let i=0; i < 5 && i < tableData.length; i++){
+        if(tableData[i] != undefined) {
+          $("#tableList").append(`
+            <div class="list border m-2 bg-light" id="wait1div">
+              <div class="p-2">
+                <span class="badge badge-info">${i+1}</span> <span>| ${tableData[i].ID}</span>
+              </div>
+            </div>`);
+        }
+      };
+      let j=1;
+      for(let i=5; i < tableData.length; i++){
+        if(tableData[i] != undefined) {
+          $("#waitList").append(`
+            <div class="list border m-2 bg-light" id="wait1div">
+              <div class="p-2">
+                <span class="badge badge-info">${j}</span> <span>| ${tableData[i].ID}</span>
+              </div>
+            </div>`);
+          j++;
+        }
+      }
+    }
+    $(document).ready(function() {
+      tableList();
+    });
+  </script>
+</body>
+</html>
